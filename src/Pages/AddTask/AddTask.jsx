@@ -17,11 +17,25 @@ const AddTask = () => {
           <Form onSubmit={handleSubmit(handleFormSubmit)}>
             <Form.Group className='mb-3' controlId="title">
               <Form.Label className='fw-bold'>Title</Form.Label>
-              <Form.Control {...register('title')} type="text" />
+              <Form.Control {...register('title',{
+                required: 'Title is required',
+                minLength:{
+                  value: 3,
+                  message: 'Title must be at least 3 characters'
+                }
+                
+              })} type="text" />
             </Form.Group>
             <Form.Group className='mb-3' controlId="description">
               <Form.Label className='fw-bold'>Description</Form.Label>
-              <Form.Control {...register('description')} as="textarea" rows={4}/>
+              <Form.Control {...register('description',{
+                required: 'Description is required',
+                minLength:{
+                  value: 10,
+                  message: 'Description must be at least 10 characters'
+                }
+
+              })} as="textarea" rows={4}/>
             </Form.Group>
             <Form.Group className='mb-3' controlId="status">
               <Form.Label className='fw-bold'>Status</Form.Label>
