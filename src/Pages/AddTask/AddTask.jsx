@@ -3,8 +3,10 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "../../utility/axiosInstance";
 import swal from "sweetalert";
+import { useAuth } from "../../Provider/AuthProvider";
 
 const AddTask = () => {
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -15,12 +17,17 @@ const AddTask = () => {
     data: addedTask = {},
     isError,
     isLoading,
+    error,
     mutate,
   } = useMutation({
     mutationKey: ["addTask"],
     mutationFn: async (newTask) => {
       console.log("newTask", newTask);
-      const response = await axiosInstance.post("/task", newTask);
+      const response = await axiosInstance.post("/task", newTask, {
+        headers: {
+          uid: user?.uid,
+        },
+      });
       return response.data;
     },
   });
@@ -37,7 +44,6 @@ const AddTask = () => {
     reset();
   };
 
-  console.log({ addedTask, isError, isLoading });
   return (
     <Container>
       <Row className="justify-content-center">
@@ -49,8 +55,8 @@ const AddTask = () => {
                 {...register("title", {
                   required: "Title is required",
                   minLength: {
-                    value: 3,
-                    message: "Title must be at least 3 characters",
+                    value: 5,
+                    message: "Title must be at least 5 characters",
                   },
                 })}
                 type="text"

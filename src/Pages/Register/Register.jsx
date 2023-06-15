@@ -69,7 +69,7 @@ const Register = () => {
     <Container>
       <Row className="justify-content-md-center">
         <Col xs md="6 p-3 shadow-lg my-5">
-          <p className="text-center fs-3 fw-bold">Register on Task Management Application</p>
+          <p className="text-center fs-3 fw-bold">Register on NoteKeeper</p>
           <Form onSubmit={handleSubmit(handleRegister)}>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>

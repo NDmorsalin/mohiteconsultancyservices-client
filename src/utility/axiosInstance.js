@@ -1,13 +1,19 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  // baseURL: 'https://rhythmedu-a12.vercel.app/api',
-  baseURL: 'http://localhost:5000/api',
+  // baseURL: 'https://mohiteconsultancyservices-backend.onrender.com/api',
+  baseURL: 'https://backend-morsalin056-gmailcom.vercel.app/api',
+  // baseURL: 'http://localhost:5000/api',
   withCredentials: true,
 });
 
 axiosInstance.interceptors.response.use(
-  response => response,
+  response => {
+    response.headers['Access-Control-Allow-Origin'] = '*';
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS';
+     response.headers['Access-Control-Allow-Credentials'] = true;
+    return response;
+  },
   error => {
     if (error.response) {
       // The request was made and the server responded with a status code that falls out of the range of 2xx
@@ -31,7 +37,6 @@ axiosInstance.interceptors.response.use(
 
 axiosInstance.interceptors.request.use(request => {
   // console.log('Starting Request', request)
-
   // console.log(localStorage.getItem('jwttoken'));
   request.headers.authorization = localStorage.getItem('jwttoken');
 

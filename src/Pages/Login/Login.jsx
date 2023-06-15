@@ -62,7 +62,7 @@ const Login = () => {
       <Row className="justify-content-md-center">
         <Col xs md="6 p-3 shadow-lg my-5">
           <p className="text-center fs-3 fw-bold">
-           Login on Task Management Application
+           Login on NoteKeeper
           </p>
 
           <Form onSubmit={handleSubmit(handleLogin)}>

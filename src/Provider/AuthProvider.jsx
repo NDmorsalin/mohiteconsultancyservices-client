@@ -76,12 +76,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
+        console.log("user", user);
         const res = await axiosInstance.post("/token", {
           email: user?.email,
         });
-        // console.log({ token: res.data.token });
+        console.log({ token: res.data.token });
         localStorage.setItem("jwttoken", res.data.token);
-        setUser({ ...user, role: res.data.role });
+        setUser({ ...user });
         setLoading(false);
       } else {
         setUser(null);
@@ -103,7 +104,7 @@ const AuthProvider = ({ children }) => {
     setError,
     forgetPassword,
   };
-  // console.log(error);
+  console.log({ loading, user, error });
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

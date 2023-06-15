@@ -38,7 +38,6 @@ const TaskCard = ({ task, refetch }) => {
   };
 
   const handleUpdateTask = (data) => {
-    
     mutate({
       title: data?.title,
       description: data?.description,
@@ -47,6 +46,33 @@ const TaskCard = ({ task, refetch }) => {
     setEditMode(false);
     refetch();
     reset();
+  };
+
+  const handleDeleteTask = async () => {
+    const swalAsk = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this task!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    });
+    if (swalAsk) {
+      await axiosInstance.delete(`/task/${task._id}`);
+      refetch();
+      swal({
+        title: "Success",
+        text: "Task deleted successfully",
+        icon: "success",
+        timer: 2000,
+      });
+    } else {
+      swal({
+        title: "Cancelled",
+        text: "Task deletion cancelled",
+        icon: "info",
+        timer: 2000,
+      });
+    }
   };
 
   const handleStatusChange = async (e) => {
@@ -133,7 +159,7 @@ const TaskCard = ({ task, refetch }) => {
                 >
                   Edit
                 </Button>
-                <Button variant="danger" onClick={handleEditClick}>
+                <Button variant="danger" onClick={handleDeleteTask}>
                   Delete
                 </Button>
               </div>
